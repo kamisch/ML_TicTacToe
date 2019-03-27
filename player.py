@@ -1,8 +1,8 @@
 #agent
 class Player:
-    def __init__(self,board):
+    def __init__(self):
         self.nextMove = None
-        self.board = board
+        self.board = None
     def move(self,board):
         self.board = board
         
