@@ -46,4 +46,4 @@ def train(epochs, bot1, bot2):
 bot = Agent()
 bot2 = Agent()
 epochs = 5000
-win_trace, bot1_wins, bot2_wins = train(epochs, bot, bot2)
+win_trace, bot1_wins, bot2_wins = train(epochs, bot, bot2)  
