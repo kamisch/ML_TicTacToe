@@ -4,7 +4,7 @@ class Game:
     def __init__(self,n=3):
         self.board = None
         self.set_board(n)
-        self.move = 0
+        self.stale = False
         self.winner = None
         self.starter = None
         self.challenger = None
