@@ -1,9 +1,8 @@
 from game import Game
 from player import Player
 
-end = False
-player1 = Player()
-player2 = Player()
+player1 = Player("O")
+player2 = Player("X")
 new_game = Game(player1,player2)
-while(not end):
-    print(new_game.board)
+new_game.start()
+new_game.play()
