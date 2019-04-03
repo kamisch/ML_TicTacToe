@@ -1,14 +1,96 @@
 #tic tac toe main
 import numpy as np
+
+
 class Game:
-    def __init__(self,n=3):
+   def __init__(self, n=3, player_sym='x'):
+        """
+        Constructor of the Board class, creates board objects.
+
+        - n(default=3) int: The number of rows and columns in the tic-tac-toe board.
+        - player_sym(default='x') str: The symbol chosen by a human player.
+        """
         self.board = None
-        self.set_board(n)
+        self.reset_board(n)
         self.stale = False
+        # Initalize the board
+
+        self.sym_o = {
+            'mark': 'O',
+            'value': 1
+        }
+        # Setup the 'O' symbol
+
+        self.sym_x = {
+            'mark': 'X',
+            'value': 2
+        }
+        # Setup the 'X' symbol
+
+        self.sym_empty = {
+            'mark': ' ',
+            'value': 0
+        }
+        # Setup the default ' ' Symbol
+
+        self.player_sym, self.bot_sym = (self.sym_x, self.sym_o) \
+                                        if player_sym.lower() == 'x' \
+                                        else (self.sym_o, self.sym_x)
+        # Ensure different symbols are assigned to the bot and the player.
+
         self.winner = None
-        self.starter = None
-        self.challenger = None
-    def set_board(self,n):
+        # Initialize the winner as None
+    def draw_char_for_item(self, item):
+        """
+        Returns the string mapping of the integers in the matrix 
+        which can be understood by, but is not equal to: 
+        {
+            0: ' ',
+            1: 'O',
+            2: 'X'
+        }
+        (The exact mapping is present in the constructor)
+        
+        params:
+        
+        - item int: One of (1, 2, 0) representing the mark of the player, bot or empty.
+        return: str
+        """
+        if item == self.sym_x.get('value'):
+            # If item = 2 (value of symbol x, return mark of symbol x viz: 'X')
+            return self.sym_x.get('mark')
+        elif item == self.sym_o.get('value'):
+            # If item = 1 (value of symbol o, return mark of symbol o viz: 'O')
+            return self.sym_o.get('mark')
+        else:
+            # Otherwise the cell must be empty, as only 1, 2 have 'O','X' mapped onto them.
+            return self.sym_empty.get('mark')
+    def draw_board(self):
+        """
+        Prints a human friendly representation of the tic-tac-toe board
+        """
+        elements_in_board = self.board.size
+        # Calculate the elements in the board
+
+        items = [
+            self.draw_char_for_item(self.board.item(item_idx)) 
+            for item_idx in range(elements_in_board)
+        ]
+        # For each integer cell/element in the matrix, find the character mapped to it
+        # and store in a list.
+        board = """
+             {} | {} | {}
+            -----------
+             {} | {} | {}
+            -----------
+             {} | {} | {}
+        """.format(*items)
+        # The *items expand to N arguments where N is the number of elements in `items`,
+        # which is equal to the number of elements in the matrix, hence the string equivalent 
+        # of the board
+        print(board)
+        
+    def reset_board(self,n):
         self.board = np.zeros((n,n)).astype(int)
         self.winner = None
     def have_same_val(self, axis, item, item_x, item_y):
